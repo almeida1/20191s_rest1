@@ -18,31 +18,31 @@ import com.fatec.sce.model.Livro;
 @RestController
 public class LivroController {
  
-  private Map<Integer, Livro> livros;
+  private Map<String, Livro> livros;
  
   public LivroController() {
-    livros = new HashMap<Integer, Livro>();
+    livros = new HashMap<String, Livro>();
  
     Livro c1 = new Livro("1111", "Engenharia de Software", "Pressman");
     Livro c2 = new Livro("2222", "Engenharia de Software", "Sommerville");
     Livro c3 = new Livro("3333", "Testes de Software", "Delamaro");
  
-    livros.put(1, c1);
-    livros.put(2, c2);
-    livros.put(3, c3);
+    livros.put(c1.getIsbn(), c1);
+    livros.put(c2.getIsbn(), c2);
+    livros.put(c3.getIsbn(), c3);
    
   }
   //Essa anotação, determina a URI /livros, a partir do método GET, 
   //poderá listar todos os livros registrados no HashMap.
   //Observe que na linha de retorno do dados, foi adicionado um HttpStatus.OK. 
   //Essa opção indica que o Spring, ao montar a resposta, deve enviar um “200 OK” para o app cliente.
-  @RequestMapping(value = "/livros", method = RequestMethod.GET)
+  @RequestMapping(value = "/livro", method = RequestMethod.GET)
   public ResponseEntity<List<Livro>> listar() {
     return new ResponseEntity<List<Livro>>(new ArrayList<Livro>(livros.values()), HttpStatus.OK);
   }
   
   @RequestMapping(value = "/livros/{id}", method = RequestMethod.GET)
-  public ResponseEntity<Livro> buscar(@PathVariable("id") int id) {
+  public ResponseEntity<Livro> buscar(@PathVariable("id") String id) {
 	System.out.println(id);
     Livro livro = livros.get(id);
    
